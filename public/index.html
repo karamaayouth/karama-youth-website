@@ -12,7 +12,6 @@
     <nav class="navbar">
         <div class="container">
             <div class="navbar-brand">
-                <img src="https://via.placeholder.com/50" alt="Karama Logo" class="logo">
                 <span class="brand-text">شباب الكرامة</span>
             </div>
             <ul class="nav-menu">
@@ -21,13 +20,8 @@
                 <li><a href="#activities">الأنشطة</a></li>
                 <li><a href="#team">الفريق</a></li>
                 <li><a href="#contact">التواصل</a></li>
-                <li><a href="#login" class="btn-login">دخول</a></li>
+                <li><button class="btn-login" onclick="openLoginModal()">دخول</button></li>
             </ul>
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
         </div>
     </nav>
 
@@ -36,7 +30,7 @@
         <div class="hero-content">
             <h1>من أجل مصر عادلة</h1>
             <p>شباب الكرامة ... صوت التغيير الحقيقي</p>
-            <button class="btn-primary">انضم إلينا</button>
+            <button class="btn-primary" onclick="openLoginModal()">انضم إلينا</button>
         </div>
         <div class="hero-stats">
             <div class="stat">
@@ -44,12 +38,12 @@
                 <p>زائر</p>
             </div>
             <div class="stat">
-                <h3 id="member-count">10</h3>
-                <p>عضو</p>
+                <h3>10</h3>
+                <p>عضو نشط</p>
             </div>
             <div class="stat">
-                <h3 id="activity-count">4</h3>
-                <p>نشاط</p>
+                <h3>4</h3>
+                <p>أنشطة حديثة</p>
             </div>
         </div>
     </section>
@@ -134,12 +128,6 @@
                         </a>
                     </div>
                 </div>
-                <form class="contact-form">
-                    <input type="text" placeholder="اسمك" required>
-                    <input type="email" placeholder="بريدك الإلكتروني" required>
-                    <textarea placeholder="رسالتك" rows="5" required></textarea>
-                    <button type="submit" class="btn-primary">إرسال</button>
-                </form>
             </div>
         </div>
     </section>
@@ -148,20 +136,34 @@
     <footer class="footer">
         <div class="container">
             <p>&copy; 2024 شباب الكرامة. جميع الحقوق محفوظة.</p>
-            <p>من أجل مصر عادلة</p>
         </div>
     </footer>
 
     <!-- Login Modal -->
-    <div id="login-modal" class="modal">
+    <div id="login-modal" class="modal" style="display: none;">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>تسجيل الدخول</h2>
-            <form id="login-form">
-                <input type="email" placeholder="البريد الإلكتروني" required>
-                <input type="password" placeholder="كلمة المرور" required>
-                <button type="submit" class="btn-primary">دخول</button>
-                <p>ليس لديك حساب؟ <a href="#signup">إنشاء حساب</a></p>
+            <span class="close" onclick="closeLoginModal()">&times;</span>
+            <h2>تسجيل الدخول / الانضمام</h2>
+            <div class="modal-tabs">
+                <button class="tab-btn active" onclick="switchTab('login')">دخول</button>
+                <button class="tab-btn" onclick="switchTab('register')">تسجيل جديد</button>
+            </div>
+            
+            <!-- Login Form -->
+            <form id="login-form" class="auth-form active" onsubmit="handleLogin(event)">
+                <input type="email" placeholder="البريد الإلكتروني" id="login-email" required>
+                <input type="password" placeholder="كلمة المرور" id="login-password" required>
+                <button type="submit">دخول</button>
+                <p id="login-error" class="error"></p>
+            </form>
+
+            <!-- Register Form -->
+            <form id="register-form" class="auth-form" onsubmit="handleRegister(event)" style="display: none;">
+                <input type="text" placeholder="الاسم الكامل" id="register-name" required>
+                <input type="email" placeholder="البريد الإلكتروني" id="register-email" required>
+                <input type="password" placeholder="كلمة المرور" id="register-password" required>
+                <button type="submit">تسجيل</button>
+                <p id="register-error" class="error"></p>
             </form>
         </div>
     </div>
