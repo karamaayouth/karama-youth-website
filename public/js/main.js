@@ -147,7 +147,8 @@ function showDashboard() {
 function joinRoom(room) {
     currentRoom = room;
     socket.emit('join-room', room);
-    document.getElementById('messages').innerHTML = '';
+    const messagesDiv = document.getElementById('messages');
+    if (messagesDiv) messagesDiv.innerHTML = '';
 }
 
 // Send Message
@@ -169,14 +170,16 @@ function sendMessage() {
 // Receive Message
 socket.on('receive-message', (data) => {
     const messagesDiv = document.getElementById('messages');
-    const messageEl = document.createElement('div');
-    messageEl.classList.add('message');
-    messageEl.innerHTML = `
-        <strong>${data.sender}:</strong> ${data.content}
-        <small>${new Date().toLocaleTimeString('ar-EG')}</small>
-    `;
-    messagesDiv.appendChild(messageEl);
-    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    if (messagesDiv) {
+        const messageEl = document.createElement('div');
+        messageEl.classList.add('message');
+        messageEl.innerHTML = `
+            <strong>${data.sender}:</strong> ${data.content}
+            <small>${new Date().toLocaleTimeString('ar-EG')}</small>
+        `;
+        messagesDiv.appendChild(messageEl);
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }
 });
 
 // Logout
